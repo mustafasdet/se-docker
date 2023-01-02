@@ -66,12 +66,18 @@ pipeline {
 // 			    }
 //             }
 //         }
-        stage('Push image') {
-           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                app.push("${env.BUILD_NUMBER}")
-                app.push("latest")
-              }
-        }
+        stage('Push Image') {
+                   steps {
+                       script {
+       			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                                               // dockerhub is the credential id we added in the jenkins
+       			        	app.push("${BUILD_NUMBER}")
+       	// build_number: jenkins has build number and we use that one to know the version with this tag
+       			            app.push("latest")
+       			        }
+                       }
+                   }
+               }
 
 
     }
