@@ -59,9 +59,9 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Math4632.', usernameVariable: 'mustafasdet')]) {
+			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass.', usernameVariable: 'user')]) {
                     //bat => for windows
-			        sh "docker login --username=${mustafasdet} --password=${Math4632.}"
+			        sh "docker login --username=${user} --password=${pass}"
 			        sh "docker push mustafasdet/se-docker:latest"
 			    }
             }
