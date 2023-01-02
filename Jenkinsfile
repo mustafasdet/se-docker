@@ -57,27 +57,27 @@ pipeline {
                 sh "docker build -t=mustafasdet/se-docker ."
             }
         }
-//         stage('Push Image') {
-//             steps {
-// 			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Math4632.', usernameVariable: 'mustafasdet')]) {
-//                     //bat => for windows
-// 			        sh "docker login --username=${user} --password=${pass}"
-// 			        sh "docker push mustafasdet/se-docker:latest"
-// 			    }
-//             }
-//         }
         stage('Push Image') {
-                   steps {
-                       script {
-       			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                                               // dockerhub is the credential id we added in the jenkins
-       			        	app.push("${BUILD_NUMBER}")
-       	// build_number: jenkins has build number and we use that one to know the version with this tag
-       			            app.push("latest")
-       			        }
-                       }
-                   }
-               }
+            steps {
+			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Math4632.', usernameVariable: 'mustafasdet')]) {
+                    //bat => for windows
+			        sh "docker login --username=${mustafasdet} --password=${Math4632.}"
+			        sh "docker push mustafasdet/se-docker:latest"
+			    }
+            }
+        }
+//         stage('Push Image') {
+//                    steps {
+//                        script {
+//        			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+//                                                // dockerhub is the credential id we added in the jenkins
+//        			        	app.push("${BUILD_NUMBER}")
+//        	// build_number: jenkins has build number and we use that one to know the version with this tag
+//        			            app.push("latest")
+//        			        }
+//                        }
+//                    }
+//                }
 
 
     }
