@@ -57,14 +57,22 @@ pipeline {
                 sh "docker build -t=mustafasdet/se-docker ."
             }
         }
-        stage('Push Image') {
-            steps {
-			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Math4632.', usernameVariable: 'mustafasdet')]) {
-                    //bat => for windows
-			        sh "docker login --username=${user} --password=${pass}"
-			        sh "docker push mustafasdet/se-docker:latest"
-			    }
-            }
+//         stage('Push Image') {
+//             steps {
+// 			    withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'Math4632.', usernameVariable: 'mustafasdet')]) {
+//                     //bat => for windows
+// 			        sh "docker login --username=${user} --password=${pass}"
+// 			        sh "docker push mustafasdet/se-docker:latest"
+// 			    }
+//             }
+//         }
+        stage('Push image') {
+           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
+              }
         }
+
+
     }
 }
